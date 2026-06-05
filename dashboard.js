@@ -247,21 +247,22 @@ function closeAssignModal() {
 }
 
 function renderAssignForm() {
-  const lessons = allLessons.filter(l => l.child === currentChild);
-
-  // Build category → unique pieces from actual lesson data
+  // Build category → pieces from ALL lessons for this child
   const catMap = {};
-  lessons.forEach(l => {
-    if (!l.category || !l.piece) return;
+  allLessons.forEach(l => {
+    if (l.child !== currentChild || !l.category || !l.piece) return;
     if (!catMap[l.category]) catMap[l.category] = new Set();
     catMap[l.category].add(l.piece);
   });
 
-  // Sort categories in Carnatic syllabus order
-  const order = ['sarale','saral','sarali','janti','janta','alankara','dhatu','geetam','geetham','lakshanageetam','swarajathi','varnam','misc'];
+  // Carnatic syllabus order keywords
+  const order = ['sarale','saral','sarali','janti','janta','alankara','dhatu','geetam','geetham','lakshana','swarajathi','varnam','misc'];
+
   const cats = Object.keys(catMap).sort((a, b) => {
-    const ai = order.findIndex(o => a.toLowerCase().includes(o));
-    const bi = order.findIndex(o => b.toLowerCase().includes(o));
+    const al = a.toLowerCase();
+    const bl = b.toLowerCase();
+    const ai = order.findIndex(o => al.includes(o));
+    const bi = order.findIndex(o => bl.includes(o));
     return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
   });
 
@@ -270,15 +271,18 @@ function renderAssignForm() {
     const pieces  = [...catMap[cat]].sort();
     const current = pendingAssignment[cat];
     return `
-      <div class="assign-row">
+      <div class="assign-row" style="margin-bottom:10px">
         <div class="assign-cat"><span class="badge-category">${cat}</span></div>
         <select class="assign-select" data-category="${cat}" onchange="onAssignChange(this)">
           <option value="">— skip —</option>
           ${pieces.map(p => `<option value="${p}" ${current && current.piece === p ? 'selected' : ''}>${p}</option>`).join('')}
         </select>
-        ${current && current.setBy === 'ai' ? '<span class="badge-ai">✨</span>' : ''}
       </div>`;
   }).join('');
+
+  if (!cats.length) {
+    form.innerHTML = '<div style="color:var(--gray-500);font-size:0.9rem">No lessons found for this student yet.</div>';
+  }
 }
 
 function onAssignChange(sel) {
