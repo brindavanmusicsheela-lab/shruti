@@ -36,7 +36,16 @@
     </div>
   </div>
 
-  <!-- Step 2: Piece -->
+  <!-- Step 2: This week's assignment checklist -->
+  <div class="card" id="step-assignment" style="display:none">
+    <h2>This Week's Assignment</h2>
+    <div id="assignment-checklist"></div>
+    <div style="margin-top:14px;border-top:1px solid var(--gray-100);padding-top:14px">
+      <button class="btn btn-secondary" onclick="showCustomPiece()">+ Practice something else</button>
+    </div>
+  </div>
+
+  <!-- Step 2b: Custom piece (not assigned) -->
   <div class="card" id="step-piece" style="display:none">
     <h2>What are you practicing?</h2>
     <div class="field">
@@ -50,24 +59,27 @@
         <option value="Geetham">Geetham</option>
         <option value="Swarajathi">Swarajathi</option>
         <option value="Varnam">Varnam</option>
-        <option value="Krithi">Krithi</option>
-        <option value="Devotional / Bhajan">Devotional / Bhajan</option>
+        <option value="Misc">Misc</option>
         <option value="Other">Other</option>
       </select>
     </div>
     <div class="field" id="piece-field" style="display:none">
-      <label>Piece name <span style="color:var(--gray-500);font-weight:400">(raga or composition name)</span></label>
-      <input type="text" id="piece-input" placeholder="e.g. Malahari, Mohanam, Sri Gananadha…" />
+      <label>Piece name</label>
+      <input type="text" id="piece-input" placeholder="e.g. Malahari, Kalyani Varnam…" />
     </div>
-    <button class="btn btn-secondary" onclick="confirmPiece()" id="confirm-piece-btn" style="display:none">
-      Confirm →
-    </button>
+    <div style="display:flex;gap:8px;margin-top:4px">
+      <button class="btn btn-secondary" onclick="showAssignment()" style="flex:1">← Back</button>
+      <button class="btn btn-start" onclick="confirmPiece()" id="confirm-piece-btn" style="flex:1;display:none">Confirm →</button>
+    </div>
   </div>
 
   <!-- Step 3: Practice timer -->
   <div class="card" id="step-timer" style="display:none">
     <div class="timer-display">
       <div id="session-label" style="font-size:0.8rem;color:var(--gray-500);margin-bottom:6px"></div>
+      <div id="assigned-notice" style="display:none;background:var(--primary-light);color:var(--primary);font-size:0.82rem;font-weight:600;padding:6px 12px;border-radius:8px;margin-bottom:10px;text-align:center">
+        📌 Assigned piece — recording required
+      </div>
       <div class="timer-clock" id="timer-clock">00:00</div>
       <div class="activity-bar">
         <div class="activity-fill" id="activity-fill"></div>
@@ -97,7 +109,7 @@
     <h2>Session Complete</h2>
     <div id="summary-content"></div>
     <div class="btn-row" style="margin-top:16px">
-      <button class="btn btn-start" onclick="practiceAnother()">Practice Another Piece</button>
+      <button class="btn btn-start" onclick="backToAssignment()">Practice Another Piece</button>
       <button class="btn btn-secondary" onclick="resetAll()" style="margin-top:8px">Done for Today</button>
     </div>
   </div>
@@ -105,7 +117,6 @@
 </div>
 
 <div class="toast" id="toast"></div>
-
 <script src="app.js"></script>
 </body>
 </html>

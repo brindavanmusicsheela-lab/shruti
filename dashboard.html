@@ -26,6 +26,14 @@
     <button class="tab-btn" onclick="switchChild('Srai 2', this)">Srai 2</button>
   </div>
 
+  <!-- Currently learning -->
+  <div class="card" id="current-card">
+    <h2>Currently Learning</h2>
+    <div id="current-piece-display">
+      <div class="empty-state"><div class="icon">🎵</div>Loading…</div>
+    </div>
+  </div>
+
   <!-- Week navigation -->
   <div class="week-nav">
     <button onclick="changeWeek(-1)">← Prev</button>
@@ -33,15 +41,15 @@
     <button onclick="changeWeek(1)" id="next-week-btn">Next →</button>
   </div>
 
-  <!-- Stats -->
+  <!-- Completion rate -->
   <div class="stats-grid">
     <div class="stat-card">
-      <div class="num" id="stat-total-mins">—</div>
-      <div class="label">Total Mins</div>
+      <div class="num" id="stat-completion">—</div>
+      <div class="label">Assigned Done</div>
     </div>
     <div class="stat-card">
       <div class="num" id="stat-active-mins">—</div>
-      <div class="label">Active Singing</div>
+      <div class="label">Active Singing Mins</div>
     </div>
     <div class="stat-card">
       <div class="num" id="stat-days">—</div>
@@ -49,39 +57,64 @@
     </div>
   </div>
 
+  <!-- Weekly assignment -->
+  <div class="card">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <h2 style="margin:0">This Week's Assignment</h2>
+      <button class="btn-small btn-primary" onclick="openAssignModal()">✏️ Edit</button>
+    </div>
+    <div id="assignment-list">
+      <div class="empty-state"><div class="icon">📋</div>No assignment set — click Edit to set one</div>
+    </div>
+  </div>
+
   <!-- Practice by piece -->
   <div class="card">
     <h2>Practice this week — by piece</h2>
     <div id="piece-list">
-      <div class="empty-state">
-        <div class="icon">🎵</div>
-        Loading sessions…
-      </div>
+      <div class="empty-state"><div class="icon">😴</div>No practice logged this week</div>
     </div>
   </div>
 
-  <!-- Teacher lesson uploads -->
+  <!-- Lessons taught -->
   <div class="card">
-    <h2>Lessons taught</h2>
+    <h2>Previous Lessons</h2>
     <div id="lesson-list">
-      <div class="empty-state">
-        <div class="icon">📚</div>
-        No lessons recorded yet
-      </div>
+      <div class="empty-state"><div class="icon">📚</div>No lessons recorded yet</div>
     </div>
   </div>
 
-  <!-- All recordings -->
+  <!-- Recordings for review -->
   <div class="card">
-    <h2>Recordings for review</h2>
+    <h2>Recordings for Review</h2>
     <div id="recordings-list">
-      <div class="empty-state">
-        <div class="icon">🎙</div>
-        No recordings yet
-      </div>
+      <div class="empty-state"><div class="icon">🎙</div>No recordings yet</div>
     </div>
   </div>
 
+</div>
+
+<!-- Assignment modal -->
+<div id="assign-modal" style="display:none">
+  <div class="modal-overlay" onclick="closeAssignModal()"></div>
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2>Set Weekly Assignment</h2>
+      <button onclick="closeAssignModal()" style="background:none;border:none;font-size:1.4rem;cursor:pointer">×</button>
+    </div>
+
+    <div style="margin-bottom:12px;display:flex;gap:8px;align-items:center">
+      <span style="font-size:0.85rem;color:var(--gray-500)">AI suggested based on practice gaps</span>
+      <button class="btn-small btn-ai" onclick="loadAiSuggestions()">✨ AI Suggest</button>
+    </div>
+
+    <div id="assign-form"></div>
+
+    <div style="margin-top:16px;display:flex;gap:8px">
+      <button class="btn btn-start" onclick="saveAssignment()" style="flex:1">Save Assignment</button>
+      <button class="btn btn-secondary" onclick="closeAssignModal()" style="flex:1">Cancel</button>
+    </div>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
