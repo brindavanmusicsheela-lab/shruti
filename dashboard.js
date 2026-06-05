@@ -16,9 +16,8 @@ window.addEventListener('DOMContentLoaded', loadData);
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 async function loadData() {
-  if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') { renderDemo(); return; }
   try {
-    const res  = await fetch(`${APPS_SCRIPT_URL}?action=getData`);
+    const res  = await fetch('/.netlify/functions/proxy?action=getData');
     const data = await res.json();
     allSessions    = data.sessions    || [];
     allLessons     = data.lessons     || [];
@@ -281,7 +280,7 @@ function onAssignChange(sel) {
 async function loadAiSuggestions() {
   showToast('Getting AI suggestions…', '');
   try {
-    const res  = await fetch(`${APPS_SCRIPT_URL}?action=getAiSuggestions&child=${encodeURIComponent(currentChild)}`);
+    const res  = await fetch(`/.netlify/functions/proxy?action=getAiSuggestions&child=${encodeURIComponent(currentChild)}`);
     const data = await res.json();
     const sugg = data.suggestions || {};
     Object.entries(sugg).forEach(([cat, item]) => {
