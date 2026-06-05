@@ -249,13 +249,26 @@ function closeAssignModal() {
 function renderAssignForm() {
   const lessons = allLessons.filter(l => l.child === currentChild);
 
+  // Build category → unique pieces from actual lesson data
+  const catMap = {};
+  lessons.forEach(l => {
+    if (!l.category || !l.piece) return;
+    if (!catMap[l.category]) catMap[l.category] = new Set();
+    catMap[l.category].add(l.piece);
+  });
+
+  // Sort categories in Carnatic syllabus order
+  const order = ['sarale','saral','sarali','janti','janta','alankara','dhatu','geetam','geetham','lakshanageetam','swarajathi','varnam','misc'];
+  const cats = Object.keys(catMap).sort((a, b) => {
+    const ai = order.findIndex(o => a.toLowerCase().includes(o));
+    const bi = order.findIndex(o => b.toLowerCase().includes(o));
+    return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+  });
+
   const form = document.getElementById('assign-form');
-  form.innerHTML = CATEGORIES.map(cat => {
-    const pieces = [...new Set(lessons.filter(l => l.category === cat).map(l => l.piece))];
+  form.innerHTML = cats.map(cat => {
+    const pieces  = [...catMap[cat]].sort();
     const current = pendingAssignment[cat];
-
-    if (!pieces.length) return ''; // skip categories with no taught pieces
-
     return `
       <div class="assign-row">
         <div class="assign-cat"><span class="badge-category">${cat}</span></div>
