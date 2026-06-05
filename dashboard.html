@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shruti – Teacher Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="theme-color" content="#7c3aed">
+</head>
+<body>
+
+<header>
+  <span class="logo">🎵</span>
+  <div>
+    <h1>Shruti</h1>
+    <div class="subtitle">Teacher Dashboard</div>
+  </div>
+  <nav><a href="index.html">← Practice</a></nav>
+</header>
+
+<div class="container">
+
+  <!-- Child tabs -->
+  <div class="child-tabs">
+    <button class="tab-btn active" onclick="switchChild('Srai 1', this)">Srai 1</button>
+    <button class="tab-btn" onclick="switchChild('Srai 2', this)">Srai 2</button>
+  </div>
+
+  <!-- Week navigation -->
+  <div class="week-nav">
+    <button onclick="changeWeek(-1)">← Prev</button>
+    <span class="week-label" id="week-label">This Week</span>
+    <button onclick="changeWeek(1)" id="next-week-btn">Next →</button>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="num" id="stat-total-mins">—</div>
+      <div class="label">Total Mins</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="stat-active-mins">—</div>
+      <div class="label">Active Singing</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="stat-days">—</div>
+      <div class="label">Days Practiced</div>
+    </div>
+  </div>
+
+  <!-- Practice by piece -->
+  <div class="card">
+    <h2>Practice this week — by piece</h2>
+    <div id="piece-list">
+      <div class="empty-state">
+        <div class="icon">🎵</div>
+        Loading sessions…
+      </div>
+    </div>
+  </div>
+
+  <!-- Teacher lesson uploads -->
+  <div class="card">
+    <h2>Lessons taught</h2>
+    <div id="lesson-list">
+      <div class="empty-state">
+        <div class="icon">📚</div>
+        No lessons recorded yet
+      </div>
+    </div>
+  </div>
+
+  <!-- All recordings -->
+  <div class="card">
+    <h2>Recordings for review</h2>
+    <div id="recordings-list">
+      <div class="empty-state">
+        <div class="icon">🎙</div>
+        No recordings yet
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="dashboard.js"></script>
+</body>
+</html>

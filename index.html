@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shruti - Music Practice</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="theme-color" content="#7c3aed">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+<header>
+  <span class="logo">🎵</span>
+  <div>
+    <h1>Shruti</h1>
+    <div class="subtitle">Carnatic Music Practice Tracker</div>
+  </div>
+  <nav><a href="dashboard.html">Teacher View →</a></nav>
+</header>
+
+<div class="container">
+
+  <!-- Step 1: Child -->
+  <div class="card" id="step-child">
+    <h2>Who is practicing?</h2>
+    <div class="child-selector">
+      <button class="child-btn" onclick="selectChild('Srai 1')" id="btn-srai1">
+        <span class="avatar">🎤</span>
+        Srai 1
+      </button>
+      <button class="child-btn" onclick="selectChild('Srai 2')" id="btn-srai2">
+        <span class="avatar">🎶</span>
+        Srai 2
+      </button>
+    </div>
+  </div>
+
+  <!-- Step 2: Piece -->
+  <div class="card" id="step-piece" style="display:none">
+    <h2>What are you practicing?</h2>
+    <div class="field">
+      <label>Category</label>
+      <select id="category-select" onchange="onCategoryChange()">
+        <option value="">— Select category —</option>
+        <option value="Sarali Varisai">Sarali Varisai</option>
+        <option value="Janta Varisai">Janta Varisai</option>
+        <option value="Tara Sthayi Varisai">Tara Sthayi Varisai</option>
+        <option value="Alankarams">Alankarams</option>
+        <option value="Geetham">Geetham</option>
+        <option value="Swarajathi">Swarajathi</option>
+        <option value="Varnam">Varnam</option>
+        <option value="Krithi">Krithi</option>
+        <option value="Devotional / Bhajan">Devotional / Bhajan</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div class="field" id="piece-field" style="display:none">
+      <label>Piece name <span style="color:var(--gray-500);font-weight:400">(raga or composition name)</span></label>
+      <input type="text" id="piece-input" placeholder="e.g. Malahari, Mohanam, Sri Gananadha…" />
+    </div>
+    <button class="btn btn-secondary" onclick="confirmPiece()" id="confirm-piece-btn" style="display:none">
+      Confirm →
+    </button>
+  </div>
+
+  <!-- Step 3: Practice timer -->
+  <div class="card" id="step-timer" style="display:none">
+    <div class="timer-display">
+      <div id="session-label" style="font-size:0.8rem;color:var(--gray-500);margin-bottom:6px"></div>
+      <div class="timer-clock" id="timer-clock">00:00</div>
+      <div class="activity-bar">
+        <div class="activity-fill" id="activity-fill"></div>
+      </div>
+      <div class="timer-status" id="timer-status">
+        <span class="status-dot" id="status-dot"></span>
+        <span id="status-text">Ready to start</span>
+      </div>
+      <div class="active-minutes" id="active-minutes-display"></div>
+      <div id="recording-badge" style="display:none">
+        <span class="recording-badge">⏺ Recording for teacher</span>
+      </div>
+    </div>
+
+    <div class="btn-row" id="controls-ready">
+      <button class="btn btn-start" onclick="startSession()">Start Practicing</button>
+    </div>
+
+    <div class="btn-row two-col" id="controls-active" style="display:none">
+      <button class="btn btn-record" id="record-btn" onclick="toggleRecording()">⏺ Record for Teacher</button>
+      <button class="btn btn-stop" onclick="stopSession()">Stop</button>
+    </div>
+  </div>
+
+  <!-- Step 4: Summary -->
+  <div class="card" id="step-summary" style="display:none">
+    <h2>Session Complete</h2>
+    <div id="summary-content"></div>
+    <div class="btn-row" style="margin-top:16px">
+      <button class="btn btn-start" onclick="practiceAnother()">Practice Another Piece</button>
+      <button class="btn btn-secondary" onclick="resetAll()" style="margin-top:8px">Done for Today</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
